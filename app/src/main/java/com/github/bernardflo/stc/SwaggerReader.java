@@ -14,7 +14,8 @@ import java.util.stream.Stream;
 public class SwaggerReader {
 
     public List<ApiInfo> read() {
-        var openAPI = new OpenAPIV3Parser().read("https://pri-mcp-mds.dev.music-flo.com/v3/api-docs");
+//        var openAPI = new OpenAPIV3Parser().read("https://pri-mcp-mds.dev.music-flo.com/v3/api-docs");
+        var openAPI = new OpenAPIV3Parser().read("file:/Users/bernard/Downloads/mcp-mds-api-docs.json");
         return readOpenAPI(openAPI);
     }
 
