@@ -47,22 +47,14 @@ public class SwaggerReader {
     }
 
     private ResponseInfo apiResponsesToInfo(ApiResponses apiResponses) {
-        var responseKeyIterator = apiResponses.keySet().iterator();
-        if (!responseKeyIterator.hasNext()) {
+        var apiResponse = apiResponses.get("200");
+        if (apiResponse == null || apiResponse.getContent() == null) {
             return new ResponseInfo(new SchemaInfo());
         }
-        var firstContentKey = responseKeyIterator.next();
-        var apiResponse = apiResponses.get(firstContentKey);
-        var content = apiResponse.getContent();
-        if (content == null) {
+        var mediaType = apiResponse.getContent().get("*/*");
+        if (mediaType == null) {
             return new ResponseInfo(new SchemaInfo());
         }
-        var contentIterator = content.keySet().iterator();
-        if (!contentIterator.hasNext()) {
-            return new ResponseInfo(new SchemaInfo());
-        }
-        var firstKey = contentIterator.next();
-        var mediaType = content.get(firstKey);
         return new ResponseInfo(
                 schemaToInfo(mediaType.getSchema())
         );
